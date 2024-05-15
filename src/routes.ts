@@ -1,9 +1,9 @@
-import express from "express";
-import { getAllExamples, createExample } from "./controller";
+import express from 'express';
+import { registerUser, listUsers } from './controllers/controller';
 
 const router = express.Router();
 
-router.get("/", getAllExamples);
-router.post("/", createExample);
+router.post('/user/register', registerUser);
+router.get('/user/list', listUsers);
 
 export default router;
