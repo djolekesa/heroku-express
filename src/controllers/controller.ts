@@ -1,24 +1,27 @@
 import { Request, Response } from 'express';
-import db from '../config/db'; // Import your Knex instance
 import * as userService from '../services/userService';
 
-export async function registerUser(req, res, next) {
+export async function registerUser(req: Request, res: Response) {
   try {
     const { username, email, password } = req.body;
     //todo encript pass
     const newUser = await userService.registerUser(username, email, password);
     res.status(201).json(newUser);
-  } catch (error) {
-    next(error); // Pass error to the error handling middleware
+  } catch {
+    (e: Error) => {
+      console.log('ERR: ', e);
+    };
   }
 }
 
-export async function listUsers(req, res, next) {
+export async function listUsers(req: Request, res: Response) {
   try {
-    const userId = req.params.id;
+    console.log('A OOVOOOVOOVOVOOVOVOV: ');
     const userProfile = await userService.listUsers();
     res.json(userProfile);
-  } catch (error) {
-    next(error); // Pass error to the error handling middleware
+  } catch {
+    (e: Error) => {
+      console.log('ERR: ', e);
+    };
   }
 }

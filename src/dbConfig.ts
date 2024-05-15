@@ -1,5 +1,5 @@
-const dbEnvironment: string = process.env.DB_ENVIRONMENT || 'development';
+import config from '../knexfile';
+import Knex, { knex } from 'knex';
+const knexInstance = Knex(config);
 
-const config = require('../knexfile')[dbEnvironment];
-
-export default config;
+export default knexInstance;

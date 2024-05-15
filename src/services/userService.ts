@@ -1,4 +1,4 @@
-import db from '../dbConfig';
+import knexInstance from '../dbConfig';
 
 interface User {
   id: number;
@@ -12,7 +12,7 @@ export async function registerUser(
   email: string,
   password: string,
 ) {
-  await db('users').insert({
+  await knexInstance('users').insert({
     username,
     email,
     password,
@@ -20,5 +20,7 @@ export async function registerUser(
 }
 
 export async function listUsers(): Promise<User[]> {
-  return await db('users').select('id', 'email', 'username');
+  console.log('ILI OOOOOOOVDE PUCAS?????/ ?????????');
+
+  return await knexInstance('users').select('id', 'email', 'username');
 }
