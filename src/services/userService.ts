@@ -20,5 +20,5 @@ export async function registerUser(
 }
 
 export async function listUsers(): Promise<User[]> {
-  return await db<User>('users').select('id', 'email', 'username');
+  return await db('users').select('id', 'email', 'username');
 }
