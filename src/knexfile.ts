@@ -1,4 +1,8 @@
 import { Knex } from 'knex';
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 const config: Knex.Config = {
   client: 'pg',

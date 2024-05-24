@@ -1,5 +1,9 @@
-import config from '../knexfile';
 import Knex, { knex } from 'knex';
-const knexInstance = Knex(config);
+console.log('OVDE RADI');
+import knexConfig from './knexfile';
+console.log('OVDE RADI');
+
+// TODO Set environment from `.env`
+const knexInstance = knex(knexConfig);
 
 export default knexInstance;
