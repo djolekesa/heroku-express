@@ -79,7 +79,6 @@ export class KnexClient {
         idleTimeoutMillis: 300000,
       },
     });
-    console.log('this.db!!!!!!!: ', this.db);
     //const test = await this.db.raw('SELECT * FROM "users"');
     db.raw('SELECT 1')
       .then(() => {
