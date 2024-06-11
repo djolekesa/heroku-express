@@ -32,45 +32,13 @@ export type DbConfig = {
 };
 
 export class KnexClient {
-  db: Knex;
-
-  static async create(): Promise<KnexClient> {
-    const instance = new KnexClient();
-    await instance.dbSetup();
-    return instance;
-  }
-
-  grow<T>(data: unknown): T[] {
-    // @ts-ignore
-    return this.forester.grow(data);
-  }
-
-  /**
-   * Parses Postgres array column value which is returned as string "{el1,el2,el3,...}"
-   * into the Array<D>.
-   */
-  parseArray<D>(
-    arr: string,
-    castFn: (s: string) => D = (s) => s as unknown as D,
-  ): Array<D> {
-    if (!arr) return [];
-
-    const separated = arr.match(/^\{(.*)}$/)?.[1];
-    return (
-      separated
-        ?.split(',')
-        ?.map((s) => s.trim())
-        .map(castFn) ?? []
-    );
-  }
-
   async dbSetup() {
     const db = knex({
       client: 'pg',
       connection: {
         connectionString: process.env.DATABASE_URL,
         ssl: {
-          rejectUnauthorized: false, // ovo me je zezalo upamti!
+          rejectUnauthorized: false,
         },
       },
       pool: {
@@ -79,7 +47,6 @@ export class KnexClient {
         idleTimeoutMillis: 300000,
       },
     });
-    //const test = await this.db.raw('SELECT * FROM "users"');
     db.raw('SELECT 1')
       .then(() => {
         console.log('Database connection established successfully');

@@ -14,7 +14,7 @@ export class UserService {
   }
 
   async initKnexConnection() {
-    console.log('Init connection');
+    console.log('Init connection...');
     this.db = await knexClient.dbSetup();
   }
   async registerUser(username: string, email: string, password: string) {
@@ -24,9 +24,10 @@ export class UserService {
   }
 
   async listUsers(): Promise<User[]> {
-    console.log('LIST: ');
     try {
-      const users = await this.db.raw('SELECT * FROM "users"');
+      const users = await this.db.raw(
+        'SELECT "userName", "email", "imageUrl" FROM "users"',
+      );
       return users.rows;
     } catch {
       (err) => {
@@ -35,7 +36,7 @@ export class UserService {
     }
   }
 
-  async loginUser(email: string): Promise<User[]> {
+  async loginUser(email: string): Promise<User> {
     try {
       const user = await this.db.raw(
         `SELECT * from "users" WHERE email = '${email}'`,
@@ -49,9 +50,10 @@ export class UserService {
   }
 
   async updateUser(email: string, url: string): Promise<void> {
-    console.log('url: ', url);
-    return await this.db.raw(
-      `UPDATE "users" SET "imageUrl" = '${url}' WHERE email = '${email}'`,
+    const updateSql = await this.db.raw(
+      `UPDATE "users" SET "imageUrl" = '${url}' WHERE email = '${email}' RETURNING "userName"`,
     );
+
+    return updateSql.rows[0]?.userName;
   }
 }

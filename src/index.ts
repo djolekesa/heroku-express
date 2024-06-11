@@ -2,7 +2,7 @@ import app from './app';
 import http from 'http';
 import https from 'https';
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 const server = http.createServer({}, app);
 
